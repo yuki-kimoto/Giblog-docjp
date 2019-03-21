@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>NAME</title>
+<meta name="description" content="Giblog::API - Giblog API">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<h1>
+  <a href="/">Giblog Web Site</a>
+</h1>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+  </div>
+  <div class="middle">
+    <h1 id="NAME"><a href="/Giblog/API.html">NAME</a></h1>
+
+<p>Giblog::API - Giblog API</p>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>Giblog::API defines sevral methods to manipulate HTML contents.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<h2 id="new">new</h2>
+
+<pre><code>my $api = Giblog::API-&gt;new(%params);</code></pre>
+
+<p>Create <a href="https://metacpan.org/pod/Giblog::API">Giblog::API</a> object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+
+<li><p>giblog</p>
+
+<p>Set <a href="https://metacpan.org/pod/Giblog">Giblog</a> object.</p>
+
+<p>By <code>giblog</code> method, you can access this parameter.</p>
+
+<pre><code>my $giblog = $api-&gt;giblog;</code></pre>
+
+</li>
+</ul>
+
+<h2 id="giblog">giblog</h2>
+
+<pre><code>my $giblog = $api-&gt;giblog;</code></pre>
+
+<p>Get <a href="https://metacpan.org/pod/Giblog">Giblog</a> object.</p>
+
+<h2 id="config">config</h2>
+
+<pre><code>my $config = $api-&gt;config;</code></pre>
+
+<p>Get Giblog config. This is hash reference.</p>
+
+<p>Config is loaded by <code>read_config</code> method.</p>
+
+<p>If config is not loaded, this method return undef.</p>
+
+<h2 id="home_dir">home_dir</h2>
+
+<pre><code>my $home_dir = $api-&gt;home_dir;</code></pre>
+
+<p>Get home directory.</p>
+
+<h2 id="read_config">read_config</h2>
+
+<pre><code>my $config = $api-&gt;read_config;</code></pre>
+
+<p>Parse &quot;giblog.conf&quot; in home directory and return hash reference.</p>
+
+<p>&quot;giblog.conf&quot; must end with correct hash reference. Otherwise exception occur.</p>
+
+<pre><code># giblog.conf
+{
+  site_title =&gt; &#39;mysite&#39;,
+  site_url =&gt; &#39;http://somesite.example&#39;,
+}</code></pre>
+
+<p>After calling read_config, You can also get config by <code>config</code> method.</p>
+
+<h2 id="clear_config">clear_config</h2>
+
+<pre><code>$api-&gt;clear_config;</code></pre>
+
+<p>Clear config. Set undef to config.</p>
+
+<h2 id="create_dir">create_dir</h2>
+
+<pre><code>$api-&gt;create_dir($dir);</code></pre>
+
+<p>Create directory.</p>
+
+<p>If Creating directory fail, exception occur.</p>
+
+<h2 id="create_file">create_file</h2>
+
+<pre><code>$api-&gt;create_file($file);</code></pre>
+
+<p>Create file.</p>
+
+<p>If Creating file fail, exception occur.</p>
+
+<h2 id="write_to_file">write_to_file</h2>
+
+<pre><code>$api-&gt;write_to_file($file, $content);</code></pre>
+
+<p>Write content to file. Content is encoded to UTF-8.</p>
+
+<p>If file is not exists, file is created automatically.</p>
+
+<p>If Creating file fail, exception occur.</p>
+
+<h2 id="slurp_file">slurp_file</h2>
+
+<pre><code>my $content = $api-&gt;slurp_file($file);</code></pre>
+
+<p>Get file content. Content is decoded from UTF-8.</p>
+
+<p>If file is not exists, exception occur.</p>
+
+<h2 id="rel_file">rel_file</h2>
+
+<pre><code>my $file = $api-&gt;rel_file(&#39;foo/bar&#39;);</code></pre>
+
+<p>Get combined path of home directory and specified relative path.</p>
+
+<p>If home directory is not set, return specified path.</p>
+
+<h2 id="run_command">run_command</h2>
+
+<pre><code>$api-&gt;run_command($command_name, @args);</code></pre>
+
+<p>Load command class and create object and execute &quot;run&quot; method.</p>
+
+<p>For example, if command name is &quot;build&quot;, Coresspoing &quot;Giblog::Command::build&quot; module is loaded, and the object is created and, &quot;run&quot; method is executed.</p>
+
+<p>If module loading fail, exception occur.</p>
+
+<h2 id="create_website_from_proto">create_website_from_proto</h2>
+
+<pre><code>$api-&gt;create_website_from_proto($home_dir, $module_name);</code></pre>
+
+<p>Create website home directory and copy files from prototype directory.</p>
+
+<p>Prototype directory is automatically detected from module name.</p>
+
+<p>If module name is &quot;Giblog::Command::new_foo&quot; and the loading path is &quot;lib/Giblog/Command/new_foo.pm&quot;, path of prototype directory is &quot;lib/Giblog/Command/new_foo/proto&quot;.</p>
+
+<pre><code>lib/Giblog/Command/new_foo.pm
+                  /new_foo/proto</code></pre>
+
+<p>Module must be loaded before calling &quot;create_website_from_proto&quot;. otherwise exception occur.</p>
+
+<p>If home directory is not specified, exception occur.</p>
+
+<p>If home directory already exists, exception occur.</p>
+
+<p>If creating directory fail, exception occur.</p>
+
+<p>If proto directory corresponding to module name is not specified, exception occur.</p>
+
+<p>If proto direcotry corresponding to module name is not found, exception occur.</p>
+
+<h2 id="get_templates_files">get_templates_files</h2>
+
+<pre><code>$api-&gt;get_templates_files;</code></pre>
+
+<p>Get file names in &quot;templates&quot; directory in home directory.</p>
+
+<p>Files in &quot;templates/common&quot; directory and hidden files(which start with &quot;.&quot;) is not contained.</p>
+
+<p>Got file name is relative name from &quot;templates&quot; directory.</p>
+
+<p>For example,</p>
+
+<pre><code>index.html
+blog/20190312121345.html
+blog/20190314452341.html</code></pre>
+
+<h2 id="get_content">get_content</h2>
+
+<pre><code>$api-&gt;get_content($data);</code></pre>
+
+<p>Get content from relative file name from &quot;templates&quot; directory. Content is decoded from UTF-8.</p>
+
+<p><b>INPUT:</b></p>
+
+<pre><code>$data-&gt;{file}</code></pre>
+
+<p><b>OUTPUT:</b></p>
+
+<pre><code>$data-&gt;{content}</code></pre>
+
+<p><b>Example:</b></p>
+
+<pre><code># Get content from templates/index.html
+$data-&gt;{file} = &#39;index.html&#39;;
+$api-&gt;get_content($data);
+my $content = $data-&gt;{content};</code></pre>
+
+<h2 id="parse_giblog_syntax">parse_giblog_syntax</h2>
+
+<pre><code>$api-&gt;parse_giblog_syntax($data);</code></pre>
+
+<p>Parse input text as &quot;Giblog syntax&quot;, and return output.</p>
+
+<p><b>INPUT:</b></p>
+
+<pre><code>$data-&gt;{content}</code></pre>
+
+<p><b>OUTPUT:</b></p>
+
+<pre><code>$data-&gt;{content}</code></pre>
+
+<p><b>Example:</b></p>
+
+<pre><code># Parse input as giblog syntax
+$data-&gt;{content} = &lt;&lt;&#39;EOS&#39;;
+Hello World!
+
+&lt;b&gt;Hi, Yuki&lt;/b&gt;
+
+&lt;div&gt;
+  OK
+&lt;/div&gt;
+
+&lt;pre&gt;
+my $foo = 1 &gt; 3 &amp;&amp; 2 &lt; 5;
+&lt;/pre&gt;
+EOS
+
+$api-&gt;parse_giblog_syntax($data);
+my $content = $data-&gt;{content};</code></pre>
+
+<p><b>Giblog syntax</b></p>
+
+<p>Giblog syntax is simple syntax to write content easily.</p>
+
+<dl>
+
+<dt>1. Add p tag automatically</dt>
+<dd>
+
+<p>Add p tag to inline element starting from the beginning of line.</p>
+
+<pre><code># Input
+Hello World!
+
+&lt;b&gt;Hi, Yuki&lt;/b&gt;
+
+&lt;div&gt;
+  OK
+&lt;/div&gt;
+
+# Output
+&lt;p&gt;
+  Hello World!
+&lt;/p&gt;
+&lt;p&gt;
+  &lt;b&gt;Hi, Yuki&lt;/b&gt;
+&lt;/p&gt;
+&lt;div&gt;
+  OK
+&lt;/div&gt;</code></pre>
+
+<p>Empty line is deleted.</p>
+
+</dd>
+<dt>2. Escape &gt;, &lt; in pre tag</dt>
+<dd>
+
+<p>If pre tag starts at the beginning of the line and its end tag starts at the beginning of the line, execute HTML escapes &quot;&gt;&quot; and &quot;&lt;&quot; between them.</p>
+
+<pre><code># Input
+&lt;pre&gt;
+my $foo = 1 &gt; 3 &amp;&amp; 2 &lt; 5;
+&lt;/pre&gt;
+
+# Output
+&lt;pre&gt;
+my $foo = 1 &amp;gt; 3 &amp;&amp; 2 &amp;lt; 5;
+&lt;/pre&gt;</code></pre>
+
+</dd>
+</dl>
+
+<h2 id="parse_title">parse_title</h2>
+
+<pre><code>$api-&gt;parse_title($data);</code></pre>
+
+<p>Get title from text of tag which class name is &quot;title&quot;.</p>
+
+<p>If parser can&#39;t get title, title become undef.</p>
+
+<p><b>INPUT:</b></p>
+
+<pre><code>$data-&gt;{content}</code></pre>
+
+<p><b>OUTPUT:</b></p>
+
+<pre><code>$data-&gt;{title}</code></pre>
+
+<p><b>Example:</b></p>
+
+<pre><code># Get title
+$data-&gt;{content} = &lt;&lt;&#39;EOS&#39;;
+&lt;div class=&quot;title&quot;&gt;Perl Tutorial&lt;/div&gt;
+EOS
+$api-&gt;parse_title($data);
+my $title = $data-&gt;{title};</code></pre>
+
+<h2 id="parse_title_from_first_h_tag">parse_title_from_first_h_tag</h2>
+
+<pre><code>$api-&gt;parse_title_from_first_h_tag($data);</code></pre>
+
+<p>Get title from text of first h1, h2, h3, h4, h5, h6 tag.</p>
+
+<p>If parser can&#39;t get title, title become undef.</p>
+
+<p><b>INPUT:</b></p>
+
+<pre><code>$data-&gt;{content}</code></pre>
+
+<p><b>OUTPUT:</b></p>
+
+<pre><code>$data-&gt;{title}</code></pre>
+
+<p><b>Example:</b></p>
+
+<pre><code># Get title
+$data-&gt;{content} = &lt;&lt;&#39;EOS&#39;;
+&lt;h1&gt;Perl Tutorial&lt;/h1&gt;
+EOS
+$api-&gt;parse_title_from_first_h_tag($data);
+my $title = $data-&gt;{title};</code></pre>
+
+<h2 id="add_page_link">add_page_link</h2>
+
+<pre><code>$api-&gt;add_page_link($data);
+$api-&gt;add_page_link($data, $opt);</code></pre>
+
+<p>Add page link to text of tag which class name is &quot;title&quot;.</p>
+
+<p>If parser can&#39;t get title, content is not changed.</p>
+
+<p><b>INPUT:</b></p>
+
+<pre><code>$data-&gt;{file}
+$data-&gt;{content}</code></pre>
+
+<p><b>OUTPUT:</b></p>
+
+<pre><code>$data-&gt;{content}</code></pre>
+
+<p>&quot;file&quot; is relative path from &quot;templates&quot; directory.</p>
+
+<p>If added link is the path which combine &quot;/&quot; and value of &quot;file&quot;.</p>
+
+<p>if $opt-&gt;{root} is specifed and this match $data-&gt;{file}, added link is &quot;/&quot;.</p>
+
+<p><b>Example:</b></p>
+
+<pre><code># Add page link
+$data-&gt;{file} = &#39;blog/20181012123456.html&#39;;
+$data-&gt;{content} = &lt;&lt;&#39;EOS&#39;;
+&lt;div class=&quot;title&quot;&gt;Perl Tutorial&lt;/div&gt;
+EOS
+$api-&gt;add_page_link($data);
+my $content = $data-&gt;{content};</code></pre>
+
+<p>Content is changed to</p>
+
+<pre><code>&lt;div class=&quot;title&quot;&gt;&lt;a href=&quot;/blog/20181012123456.html&quot;&gt;Perl Tutorial&lt;/a&gt;&lt;/div&gt;</code></pre>
+
+<p><b>Example: root page</b></p>
+
+<pre><code># Add page link
+$data-&gt;{file} = &#39;index.html&#39;;
+$data-&gt;{content} = &lt;&lt;&#39;EOS&#39;;
+&lt;div class=&quot;title&quot;&gt;Perl Tutorial&lt;/div&gt;
+EOS
+$api-&gt;add_page_link($data);
+my $content = $data-&gt;{content};</code></pre>
+
+<p>Content is changed to</p>
+
+<pre><code>&lt;div class=&quot;title&quot;&gt;&lt;a href=&quot;/&quot;&gt;Perl Tutorial&lt;/a&gt;&lt;/div&gt;</code></pre>
+
+<h2 id="add_page_link_to_first_h_tag">add_page_link_to_first_h_tag</h2>
+
+<pre><code>$api-&gt;add_page_link_to_first_h_tag($data);
+$api-&gt;add_page_link_to_first_h_tag($data, $opt);</code></pre>
+
+<p>Add page link to text of first h1, h2, h3, h4, h5, h6 tag.</p>
+
+<p>If parser can&#39;t get title, content is not changed.</p>
+
+<p><b>INPUT:</b></p>
+
+<pre><code>$data-&gt;{file}
+$data-&gt;{content}</code></pre>
+
+<p><b>OUTPUT:</b></p>
+
+<pre><code>$data-&gt;{content}</code></pre>
+
+<p>&quot;file&quot; is relative path from &quot;templates&quot; directory.</p>
+
+<p>If added link is the path which combine &quot;/&quot; and value of &quot;file&quot;.</p>
+
+<p>if $opt-&gt;{root} is specifed and this match $data-&gt;{file}, added link is &quot;/&quot;.</p>
+
+<p><b>Example: entry page</b></p>
+
+<pre><code># Add page link
+$data-&gt;{file} = &#39;blog/20181012123456.html&#39;;
+$data-&gt;{content} = &lt;&lt;&#39;EOS&#39;;
+&lt;h1&gt;Perl Tutorial&lt;/h1&gt;
+EOS
+$api-&gt;add_page_link_to_first_h_tag($data);
+my $content = $data-&gt;{content};</code></pre>
+
+<p>Content is changed to</p>
+
+<pre><code>&lt;h1&gt;&lt;a href=&quot;/blog/20181012123456.html&quot;&gt;Perl Tutorial&lt;/a&gt;&lt;/h1&gt;</code></pre>
+
+<p><b>Example: root</b></p>
+
+<pre><code># Add page link
+$data-&gt;{file} = &#39;index.html&#39;;
+$data-&gt;{content} = &lt;&lt;&#39;EOS&#39;;
+&lt;h1&gt;Perl Tutorial&lt;/h1&gt;
+EOS
+$api-&gt;add_page_link_to_first_h_tag($data);
+my $content = $data-&gt;{content};</code></pre>
+
+<p>Content is changed to</p>
+
+<pre><code>&lt;h1&gt;&lt;a href=&quot;/&quot;&gt;Perl Tutorial&lt;/a&gt;&lt;/h1&gt;</code></pre>
+
+<h2 id="parse_description">parse_description</h2>
+
+<pre><code>$api-&gt;parse_description($data);</code></pre>
+
+<p>Get description from text of tag which class name is &quot;description&quot;.</p>
+
+<p>Both of left spaces and right spaces are removed. This is Unicode space.</p>
+
+<p>If parser can&#39;t get description, description become undef.</p>
+
+<p><b>INPUT:</b></p>
+
+<pre><code>$data-&gt;{content}</code></pre>
+
+<p><b>OUTPUT:</b></p>
+
+<pre><code>$data-&gt;{description}</code></pre>
+
+<p><b>Example:</b></p>
+
+<pre><code># Get description
+$data-&gt;{content} = &lt;&lt;&#39;EOS&#39;;
+&lt;div class=&quot;description&quot;&gt;
+  Perl Tutorial is site for beginners of Perl 
+&lt;/div&gt;
+EOS
+$api-&gt;parse_description($data);
+my $description = $data-&gt;{description};</code></pre>
+
+<p>Output description is &quot;Perl Tutorial is site for beginners of Perl&quot;.</p>
+
+<h2 id="parse_description_from_first_p_tag">parse_description_from_first_p_tag</h2>
+
+<pre><code>$api-&gt;parse_description_from_first_p_tag($data);</code></pre>
+
+<p>Get description from text of first p tag.</p>
+
+<p>HTML tag is removed.</p>
+
+<p>Both of left spaces and right spaces is removed. This is Unicode space.</p>
+
+<p>If parser can&#39;t get description, description become undef.</p>
+
+<p><b>INPUT:</b></p>
+
+<pre><code>$data-&gt;{content}</code></pre>
+
+<p><b>OUTPUT:</b></p>
+
+<pre><code>$data-&gt;{description}</code></pre>
+
+<p><b>Example:</b></p>
+
+<pre><code># Get description
+$data-&gt;{content} = &lt;&lt;&#39;EOS&#39;;
+&lt;p&gt;
+  Perl Tutorial is site for beginners of Perl 
+&lt;/p&gt;
+&lt;p&gt;
+  Foo, Bar
+&lt;/p&gt;
+EOS
+$api-&gt;parse_description_from_first_p_tag($data);
+my $description = $data-&gt;{description};</code></pre>
+
+<p>Output description is &quot;Perl Tutorial is site for beginners of Perl&quot;.</p>
+
+<h2 id="parse_keywords">parse_keywords</h2>
+
+<pre><code>$api-&gt;parse_keywords($data);</code></pre>
+
+<p>Get keywords from text of tag which class name is &quot;keywords&quot;.</p>
+
+<p>If parser can&#39;t get keywords, keywords become undef.</p>
+
+<p><b>INPUT:</b></p>
+
+<pre><code>$data-&gt;{content}</code></pre>
+
+<p><b>OUTPUT:</b></p>
+
+<pre><code>$data-&gt;{keywords}</code></pre>
+
+<p><b>Example:</b></p>
+
+<pre><code># Get keywords
+$data-&gt;{content} = &lt;&lt;&#39;EOS&#39;;
+&lt;div class=&quot;keywords&quot;&gt;Perl,Tutorial&lt;/div&gt;
+EOS
+$api-&gt;parse_keywords($data);
+my $keywords = $data-&gt;{keywords};</code></pre>
+
+<h2 id="parse_first_img_src">parse_first_img_src</h2>
+
+<pre><code>$api-&gt;parse_first_img_src($data);</code></pre>
+
+<p>Get image src from src attribute of first img tag.</p>
+
+<p>If parser can&#39;t get image src, image src become undef.</p>
+
+<p><b>INPUT:</b></p>
+
+<pre><code>$data-&gt;{content}</code></pre>
+
+<p><b>OUTPUT:</b></p>
+
+<pre><code>$data-&gt;{img_src}</code></pre>
+
+<p><b>Example:</b></p>
+
+<pre><code># Get first_img_src
+$data-&gt;{content} = &lt;&lt;&#39;EOS&#39;;
+&lt;img class=&quot;ppp&quot; src=&quot;/path&quot;&gt;
+EOS
+$api-&gt;parse_first_img_src($data);
+my $img_src = $data-&gt;{img_src};</code></pre>
+
+<p>Output img_src is &quot;/path&quot;.</p>
+
+<h2 id="read_common_templates">read_common_templates</h2>
+
+<pre><code>$api-&gt;read_common_templates($data);</code></pre>
+
+<p>Read common templates in &quot;templates/common&quot; directory.</p>
+
+<p>The follwoing templates is loaded. Content is decoded from UTF-8.</p>
+
+<p>&quot;meta.html&quot;, &quot;header.html&quot;, &quot;footer.html&quot;, &quot;side.html&quot;, &quot;top.html&quot;, &quot;bottom.html&quot;</p>
+
+<p><b>OUTPUT:</b></p>
+
+<pre><code>$data-&gt;{meta}
+$data-&gt;{header}
+$data-&gt;{footer}
+$data-&gt;{side}
+$data-&gt;{top}
+$data-&gt;{bottom}</code></pre>
+
+<h2 id="add_meta_title">add_meta_title</h2>
+
+<p>Add title tag to meta section.</p>
+
+<p><b>INPUT:</b></p>
+
+<pre><code>$data-&gt;{title}
+$data-&gt;{meta}</code></pre>
+
+<p><b>OUTPUT:</b></p>
+
+<pre><code>$data-&gt;{meta}</code></pre>
+
+<p>If value of &quot;meta&quot; is &quot;foo&quot; and &quot;title&quot; is &quot;Perl Tutorial&quot;, output value of &quot;meta&quot; become &quot;foo\n&lt;title&gt;Perl Tutorial&lt;/title&gt;&quot;</p>
+
+<h2 id="add_meta_description">add_meta_description</h2>
+
+<p>Add meta description tag to meta section.</p>
+
+<p><b>INPUT:</b></p>
+
+<pre><code>$data-&gt;{description}
+$data-&gt;{meta}</code></pre>
+
+<p><b>OUTPUT:</b></p>
+
+<pre><code>$data-&gt;{meta}</code></pre>
+
+<p>If value of &quot;meta&quot; is &quot;foo&quot; and &quot;description&quot; is &quot;Perl is good&quot;, output value of &quot;meta&quot; become &quot;foo\n&lt;meta name=&quot;description&quot; content=&quot;Perl is good&quot;&gt;&quot;</p>
+
+<h2 id="build_entry">build_entry</h2>
+
+<p>Build entry HTML by &quot;content&quot; and &quot;top&quot;, &quot;bottom&quot;.</p>
+
+<p><b>INPUT:</b></p>
+
+<pre><code>$data-&gt;{content}
+$data-&gt;{top}
+$data-&gt;{bottom}</code></pre>
+
+<p><b>OUTPUT:</b></p>
+
+<pre><code>$data-&gt;{content}</code></pre>
+
+<p>Output is the following HTML.</p>
+
+<pre><code>&lt;div class=&quot;entry&quot;&gt;
+  &lt;div class=&quot;top&quot;&gt;
+    $data-&gt;{top}
+  &lt;/div&gt;
+  &lt;div class=&quot;middle&quot;&gt;
+    $data-&gt;{content}
+  &lt;/div&gt;
+  &lt;div class=&quot;bottom&quot;&gt;
+    $data-&gt;{bottom}
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+<h2 id="build_html">build_html</h2>
+
+<p>Build whole HTML by &quot;content&quot; and &quot;header&quot;, &quot;bottom&quot;, &quot;side&quot;, &quot;footer&quot;.</p>
+
+<p><b>INPUT:</b></p>
+
+<pre><code>$data-&gt;{content}
+$data-&gt;{header}
+$data-&gt;{bottom}
+$data-&gt;{side}
+$data-&gt;{footer}</code></pre>
+
+<p><b>OUTPUT:</b></p>
+
+<pre><code>$data-&gt;{content}</code></pre>
+
+<p>Output is the following HTML.</p>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    $data-&gt;{meta}
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div class=&quot;container&quot;&gt;
+      &lt;div class=&quot;header&quot;&gt;
+        $data-&gt;{header}
+      &lt;/div&gt;
+      &lt;div class=&quot;main&quot;&gt;
+        &lt;div class=&quot;content&quot;&gt;
+          $data-&gt;{content}
+        &lt;/div&gt;
+        &lt;div class=&quot;side&quot;&gt;
+          $data-&gt;{side}
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;footer&quot;&gt;
+        $data-&gt;{footer}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+<h2 id="write_to_public_file">write_to_public_file</h2>
+
+<p>Write content to file in &quot;public&quot; directory. Content is encoded to UTF-8.</p>
+
+<p>If value of &quot;file&quot; is &quot;index.html&quot;, write path become &quot;public/index.html&quot;</p>
+
+<p><b>INPUT:</b></p>
+
+<pre><code>$data-&gt;{content}
+$data-&gt;{file}</code></pre>
+
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    Side Bar
+  </div>
+  <ul>
+    <li>Foo</li>
+    <li>Bar</li>
+    <li>Baz</li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <!-- footer -->
+<a href="https://github.com/yuki-kimoto/giblog">Giblog</a>
+
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>NAME</title>
+<meta name="description" content="Giblog - HTML Generator for git generation">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<h1>
+  <a href="/">Giblog Web Site</a>
+</h1>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+  </div>
+  <div class="middle">
+    <h1 id="NAME"><a href="/">NAME</a></h1>
+
+<p>Giblog - HTML Generator for git generation</p>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>Giblog is <b>HTML generator</b> written by Perl language.</p>
+
+<p>You can create <b>your onw website and blog</b> easily.</p>
+
+<p>Giblog is in beta test before 1.0 release. Note that features is changed without warnings.</p>
+
+<h1 id="SYNOPSYS">SYNOPSYS</h1>
+
+<pre><code># New empty web site
+giblog new mysite
+
+# New simple web site
+giblog new_website mysite
+
+# New simple blog
+giblog new_blog mysite
+
+# Change directory
+cd mysite
+
+# Add new entry
+giblog add
+
+# Build web site
+giblog build
+
+# Serve web site(need Mojolicious)
+morbo serve.pl
+
+# Add new entry with home directory
+giblog add --home /home/kimoto/mysite
+
+# Build web site with home directory
+giblog build --home /home/kimoto/mysite</code></pre>
+
+<h1 id="DESCRIPTION1">DESCRIPTION</h1>
+
+<p>Giblog have the following features.</p>
+
+<ul>
+
+<li><p>Build both website and blog.</p>
+
+</li>
+<li><p>Linux, Mac OS, Windows Support. (In Windows, recommend installation of msys2)</p>
+
+</li>
+<li><p>Default CSS for smart phone site</p>
+
+</li>
+<li><p>Content is wrapped by top section, bottom section, header, footer, HTML head, and side var.</p>
+
+</li>
+<li><p>Add p tag automatically. Escape &lt;, &gt; automatically in pre tag</p>
+
+</li>
+<li><p>Set title tag automatically from text of first h1-h6 tag.</p>
+
+</li>
+<li><p>Set meta description tag automatically from text of first p tag.</p>
+
+</li>
+<li><p>You can use above all features or choice some of them, and can add more advanced features.</p>
+
+</li>
+<li><p>In advanced features, you can customize list of entries page, use markdown syntax, and add twitter card, etc.</p>
+
+</li>
+<li><p>Build 645 pages by 0.78 seconds in my starndard linux environment.</p>
+
+</li>
+<li><p>Use JavaScript. Display the ad</p>
+
+</li>
+<li><p>You can manage files by git easily, and deploy them to rental server.</p>
+
+</li>
+<li><p>If you use Github Pages, you can create https web site for free.</p>
+
+</li>
+<li><p>Giblog is used to build Perl Zemi web site.</p>
+
+</li>
+</ul>
+
+<h1 id="TUTORIAL">TUTORIAL</h1>
+
+<h2 id="Create-web-site">Create web site</h2>
+
+<p>You can create web site from 3 prototype.</p>
+
+<p><b>1. Empty website</b></p>
+
+<p>&quot;new&quot; command create empty website. &quot;mysite&quot; is a exapmle name of your web site.</p>
+
+<pre><code>giblog new mysite</code></pre>
+
+<p>If you want to create empty site, choice this prototype.</p>
+
+<p>Templates and CSS is empty and provide minimal build process.</p>
+
+<p><b>2. Website</b></p>
+
+<p>&quot;new_website&quot; command create empty website.</p>
+
+<pre><code>giblog new_website mysite</code></pre>
+
+<p>If you want to create simple website, choice this prototype.</p>
+
+<p>Template of top page &quot;templates/index.html&quot; is created. CSS is designed to match smart phone site and provide basic build process.</p>
+
+<p><b>3. Blog</b></p>
+
+<p>&quot;new_blog&quot; command create empty website.</p>
+
+<pre><code>giblog new_blog mysite</code></pre>
+
+<p>If you want to create blog, choice this prototype.</p>
+
+<p>Have page &quot;templates/index.html&quot; which show 7 days entry.</p>
+
+<p>Have page &quot;templates/list.html&quot; which show all page links.</p>
+
+<p>CSS is designed to match smart phone site and provide basic build process.</p>
+
+<h2 id="Add-entry-page">Add entry page</h2>
+
+<p>&quot;add&quot; command add blog entry page.</p>
+
+<pre><code>giblog add</code></pre>
+
+<p>You need to change directory to &quot;mysite&quot; before run &quot;add&quot; command.</p>
+
+<pre><code>cd mysite</code></pre>
+
+<p>If you use &quot;--home&quot; option, you don&#39;t need to change directory</p>
+
+<pre><code>giblog add --home /home/kimoto/mysite</code></pre>
+
+<p>Created file name is, for example,</p>
+
+<pre><code>templates/blog/20080108132865.html</code></pre>
+
+<p>This file name contains current date and time.</p>
+
+<h2 id="Build-web-site">Build web site</h2>
+
+<p>&quot;build&quot; command build web site.</p>
+
+<pre><code>giblog build</code></pre>
+
+<p>You need to change directory to &quot;mysite&quot; before run &quot;build&quot; command.</p>
+
+<pre><code>cd mysite</code></pre>
+
+<p>If you use &quot;--home&quot; option, you don&#39;t need to change directory.</p>
+
+<pre><code>giblog build --home /home/kimoto/mysite</code></pre>
+
+<p>What is build process?</p>
+
+<p>Build process is writen in &quot;run&quot; method of &quot;lib/Giblog/Command/build.pm&quot;.</p>
+
+<p>Main part of build process is combination of <a href="https://metacpan.org/pod/Giblog::API">Giblog::API</a>.</p>
+
+<pre><code># &quot;lib/Giblog/Command/build.pm&quot; in web site created by &quot;new_blog&quot; command
+package Giblog::Command::build;
+
+use base &#39;Giblog::Command&#39;;
+
+use strict;
+use warnings;
+
+use File::Basename &#39;basename&#39;;
+
+sub run {
+  my ($self, @args) = @_;
+  
+  # API
+  my $api = $self-&gt;api;
+  
+  # Read config
+  my $config = $api-&gt;read_config;
+  
+  # Get files in templates directory
+  my $files = $api-&gt;get_templates_files;
+  
+  for my $file (@$files) {
+    # Data
+    my $data = {file =&gt; $file};
+    
+    # Get content from file in templates directory
+    $api-&gt;get_content($data);
+
+    # Parse Giblog syntax
+    $api-&gt;parse_giblog_syntax($data);
+
+    # Parse title
+    $api-&gt;parse_title_from_first_h_tag($data);
+
+    # Add page link
+    $api-&gt;add_page_link_to_first_h_tag($data, {root =&gt; &#39;index.html&#39;});
+
+    # Parse description
+    $api-&gt;parse_description_from_first_p_tag($data);
+
+    # Read common templates
+    $api-&gt;read_common_templates($data);
+    
+    # Add meta title
+    $api-&gt;add_meta_title($data);
+
+    # Add meta description
+    $api-&gt;add_meta_description($data);
+
+    # Build entry html
+    $api-&gt;build_entry($data);
+    
+    # Build whole html
+    $api-&gt;build_html($data);
+    
+    # Write to public file
+    $api-&gt;write_to_public_file($data);
+  }
+  
+  # Create index page
+  $self-&gt;create_index;
+  
+  # Create list page
+  $self-&gt;create_list;
+}</code></pre>
+
+<p>&quot;run&quot; method read all template files in &quot;templates&quot; directory, and edit them, and wrtie output to file in &quot;public&quot; directory.</p>
+
+<p>You can edit this build process by yourself if you need.</p>
+
+<p>If you need to understand APIs in run method, see <a href="https://metacpan.org/pod/Giblog::API">Giblog::API</a>.</p>
+
+<h2 id="Serve-web-site">Serve web site</h2>
+
+<p>If you have <a href="https://metacpan.org/pod/Mojolicious">Mojolicious</a>, you can build and serve web site.</p>
+
+<pre><code>morbo serve.pl</code></pre>
+
+<p>You see the following message.</p>
+
+<pre><code>Server available at http://127.0.0.1:3000
+Server start</code></pre>
+
+<p>If files in &quot;templates&quot; directory is updated, web site is build and this server is reloaded automatically.</p>
+
+<h1 id="AUTHOR">AUTHOR</h1>
+
+<p>Yuki Kimoto, <code>&lt;kimoto.yuki at gmail.com&gt;</code></p>
+
+<h1 id="LICENSE-AND-COPYRIGHT">LICENSE AND COPYRIGHT</h1>
+
+<p>Copyright 2018 Yuki Kimoto.</p>
+
+<p>This program is free software; you can redistribute it and/or modify it under the terms of the the Artistic License (2.0). You may obtain a copy of the full license at:</p>
+
+<p><a href="http://www.perlfoundation.org/artistic_license_2_0">http://www.perlfoundation.org/artistic_license_2_0</a></p>
+
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    Side Bar
+  </div>
+  <ul>
+    <li>Foo</li>
+    <li>Bar</li>
+    <li>Baz</li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <!-- footer -->
+<a href="https://github.com/yuki-kimoto/giblog">Giblog</a>
+
+      </div>
+    </div>
+  </body>
+</html>
