@@ -29,12 +29,18 @@ sub run {
     
     # Get content from file in templates directory
     $api->get_content($data);
-    
+
     # Parse POD
     if ($data->{file} =~ /\.pm$/) {
       my $content = $data->{content};
+
+      # Parse title
+      parse_title($api, $data);
+
+      # Parse description
+      parse_description($api, $data);
+
       my $pod = $content;
-      
       my $parser = Pod::Simple::XHTML->new;
       $parser->perldoc_url_prefix('https://metacpan.org/pod/');
       $parser->$_('') for qw(html_header html_footer);
@@ -45,7 +51,7 @@ sub run {
       $content = $output;
       
       $data->{content} = $content;
-      
+
       # Fix extension
       $data->{file} =~ s/\.pm$/.html/;
       
@@ -58,15 +64,6 @@ sub run {
     else {
       $api->parse_giblog_syntax($data);
     }
-    
-    # Parse title
-    $api->parse_title_from_first_h_tag($data);
-
-    # Add page link
-    $api->add_page_link_to_first_h_tag($data, {root => 'index.html'});
-
-    # Parse description
-    $api->parse_description_from_first_p_tag($data);
 
     # Read common templates
     $api->read_common_templates($data);
@@ -86,6 +83,36 @@ sub run {
     # Write to public file
     $api->write_to_public_file($data);
   }
+}
+
+sub parse_title {
+  my ($api, $data) = @_;
+  
+  my $content = $data->{content};
+  my $title;
+  if ($content =~ /=head1 NAME(.*?)=/s) {
+    $title = $1;
+    $title =~ s/^\s*//;
+    $title =~ s/\s+$//;
+  } 
+  
+  $data->{title} = $title;
+}
+
+sub parse_description {
+  my ($api, $data) = @_;
+  
+  my $content = $data->{content};
+  my $description;
+  if ($content =~ /=head1 DESCRIPTION(.*?)=/s) {
+    $description = $1;
+    $description =~ s/^\s*//;
+    $description =~ s/\s+$//;
+    $description =~ s/B<//g;
+    $description =~ s/>//g;
+  } 
+  
+  $data->{description} = $description;
 }
 
 1;
