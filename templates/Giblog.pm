@@ -1,227 +1,163 @@
-package Giblog;
+=encoding utf8
 
-use 5.008007;
-use strict;
-use warnings;
+=head1 名前
 
-use Getopt::Long 'GetOptions';
+Giblog - git世代のためのブログ生成ツール
 
-our $VERSION = '0.70';
+=head1 説明
 
-sub new {
-  my $class = shift;
+GiblogはPerlで書かれたブログ生成ツールです。Webサイトとブログを簡単に作成できます。作られたファイルはすべて静的なHTMLで、gitを使って管理することができます。
+
+Giblogは1.0へのリリースに向かってベータテスト中です。機能が警告なく変更されることがあるので、注意してください。
+
+=head1 使い方
   
-  my $self = {
-    @_
-  };
-  
-  return bless $self, $class;
-}
-
-sub home_dir { shift->{'home_dir'} }
-sub config { shift->{config} }
-
-sub build_api {
-  my ($class, %opt) = @_;
-  
-  my $giblog = Giblog->new(%opt);
-
-  my $api = Giblog::API->new(giblog => $giblog);
-  
-  return $api;
-}
-
-sub parse_argv {
-  my ($class, @argv) = @_;
-  
-  # If first argument don't start with -, it is command
-  my $command_name;
-  if (@argv && $argv[0] !~ /^-/) {
-    $command_name = shift @argv;
-  }
-
-  # Command
-  unless (defined $command_name) {
-    die "Command must be specifed\n";
-  }
-  if ($command_name =~ /^-/) {
-    die "Command \"$command_name\" is not found\n";
-  }
-  
-  local @ARGV = @argv;
-  my $getopt_option_save = Getopt::Long::Configure(qw(default no_auto_abbrev no_ignore_case));
-  GetOptions(
-    "h|home=s" => \my $home_dir,
-    'I|include=s'  => \my @include,
-  );
-  Getopt::Long::Configure($getopt_option_save);
-  
-  my $opt = {
-    home_dir => $home_dir,
-    include => \@include,
-    command_name => $command_name,
-    argv => \@argv
-  };
-  
-  return $opt;
-}
-
-=head1 NAME
-
-Giblog - HTML Generator for git generation
-
-=head1 DESCRIPTION
-
-Giblog is B<HTML generator> written by Perl language.
-
-You can create B<your onw website and blog> easily.
-
-Giblog is in beta test before 1.0 release. Note that features is changed without warnings.
-
-=head1 SYNOPSYS
-  
-  # New empty web site
+  # 新しく空のWebサイトを作成
   giblog new mysite
 
-  # New simple web site
+  # 新しくWebサイトを作成
   giblog new_website mysite
 
-  # New simple blog
+  # 新しくブログを作成
   giblog new_blog mysite
   
-  # Change directory
+  # ディレクトリ変更
   cd mysite
   
-  # Add new entry
+  # 新しいエントリーを追加
   giblog add
 
-  # Build web site
+  # Webサイトを構築
   giblog build
   
-  # Serve web site(need Mojolicious)
+  # Webサイトをサーブ(Mojoliciousが必要です)
   morbo serve.pl
 
-  # Add new entry with home directory
+  # ホームディレクトリを指定して新しいエントリーを追加
   giblog add --home /home/kimoto/mysite
   
-  # Build web site with home directory
+  # ホームディレクトリを指定して、Webサイトを構築
   giblog build --home /home/kimoto/mysite
 
-=head1 DESCRIPTION
+=head1 機能
 
-Giblog have the following features.
+Giblogは、以下の機能を持っています。
 
 =over 4
 
-=item * Build both website and blog.
+=item * Webサイトとブログ作成の両方に対応。
 
-=item * Linux, Mac OS, Windows Support. (In Windows, recommend installation of msys2)
+=item * Linux、Mac OS、Windows対応。Windowsでは、msys2のインストールを推奨。
 
-=item * Default CSS for smart phone site
+=item * スマートフォン対応を意識した、デフォルトのCSSを提供。
 
-=item * Content is wrapped by top section, bottom section, header, footer, HTML head, and side var.
+=item * コンテンツを、トップ、ボトム、サイドバー、ヘッダー、フッター、HTMLヘッダで囲んで出力。
 
-=item * Add p tag automatically. Escape E<lt>, E<gt> automatically in pre tag
+=item * pタグをを自動追加。preタグの中でE<lt>、E<gt>を、自動的にエスケープ。
 
-=item * Set title tag automatically from text of first h1-h6 tag.
+=item * 最初の見出しタグ(h1～h6)から自動的にtitleに設定。
 
-=item * Set meta description tag automatically from text of first p tag.
+=item * 最初の段落を自動的にdescriptionに設定。
 
-=item * You can use above all features or choice some of them, and can add more advanced features.
+=item * 機能のカスタマイズは、自由自在。すべてをなくすことも、自由に選ぶことも、機能を追加することも可能。
 
-=item * In advanced features, you can customize list of entries page, use markdown syntax, and add twitter card, etc.
+=item * 機能の追加では、一覧ページをカスタマイズしたり、マークダウンを使ったり、Twitterカードを設定したりできます。
 
-=item * Build 645 pages by 0.78 seconds in my starndard linux environment.
+=item * Mojoliciousのmorboコマンドを使って、Webサーバーを起動してWebサイトを確認可能。コンテンツやヘッダなどの変更を検知して、自動的に再構築されます。
 
-=item * Use JavaScript. Display the ad
+=item * ベンチマークでは、私の標準的なLinux環境において、645ページを、0.78秒で構築。
 
-=item * You can manage files by git easily, and deploy them to rental server.
+=item * JavaScriptの利用制限なし。アフェリエイト広告を張ることも自由。
 
-=item * If you use Github Pages, you can create https web site for free.
+=item * gitでファイルを管理して、さくらのレンタルサーバーなどに、配置すれば、HTTPSに対応した情報発信サイトを、個数無制限・低価格(ディスク容量100Gで515円)で作成できます。
 
-=item * Giblog is used to build Perl Zemi web site.
+=item * Github Pagesを利用すれば、手順が少し難しいですが、HTTPSに対応した情報発信サイトを無料で作成できます。
+
+=item * Perlゼミのサイト構築に実際に利用されています。
 
 =back
 
-=head1 TUTORIAL
+=head1 チュートリアル
 
-=head2 Create web site
+=head2 Webサイトの作成
 
-You can create web site from 3 prototype.
+３つのプロトタイプからWebサイトを作成できます。
 
-B<1. Empty website>
+B<1. 空のWebサイト>
 
-"new" command create empty website. "mysite" is a exapmle name of your web site.
+「new」コマンドで、空のWebサイトを作成します。「mysite」はWebサイトの名前の一例です。
 
   giblog new mysite
 
-If you want to create empty site, choice this prototype.
+もし空のWebサイトを作成したい場合は、このプロトタイプを選んでください。
 
-Templates and CSS is empty and provide minimal build process.
+テンプレートとCSSは空で、最低限の構築プロセスのみを提供します。
 
-B<2. Website>
+B<2.  Webサイト>
 
-"new_website" command create empty website. 
+「new_website」コマンドで、空のWebサイトを作成します。
 
   giblog new_website mysite
 
-If you want to create simple website, choice this prototype.
+もし、Webサイトを作成したい場合は、このプロトタイプを選んでください。
 
-Template of top page "templates/index.html" is created. CSS is designed to match smart phone site and provide basic build process.
+トップページのテンプレート「templates/index.html」が作成されます。
 
-B<3. Blog>
+CSSは、スマートフォンサイトに適合しており、基本的な構築プロセスが提供されます。
+
+B<3. ブログ>
 
 "new_blog" command create empty website. 
 
   giblog new_blog mysite
 
-If you want to create blog, choice this prototype.
+ブログを作成したい場合は、このプロトタイプを選んでください。
 
-Have page "templates/index.html" which show 7 days entry.
+7日間のエントリーを表示したトップページ「templates/index.html」が作成されます。
 
-Have page "templates/list.html" which show all page links.
+すべてのページへのリンクを表示した「templates/list.html」が作成されます。
 
-CSS is designed to match smart phone site and provide basic build process.
+CSSは、スマートフォンサイトに適合しており、基本的な構築プロセスが提供されます。
 
-=head2 Add entry page
+=head2 エントリーページの追加
 
-"add" command add blog entry page.
+「add」コマンドを使って、ブログのエントリページを追加することができます。
   
   giblog add
 
-You need to change directory to "mysite" before run "add" command.
+「add」コマンドを実行する前に、「mysite」にディレクトリを変更する必要があります。
 
   cd mysite
 
-If you use "--home" option, you don't need to change directory
+「--home」オプションを使う場合は、ディレクトリを変更する必要はありません。
 
   giblog add --home /home/kimoto/mysite
 
-Created file name is, for example,
+作成されたファイル名は、例えば、以下のようになります。
 
   templates/blog/20080108132865.html
 
-This file name contains current date and time.
+このファイル名は、日付と時刻を含みます。
 
-=head2 Build web site
+=head2 Webサイトの構築
 
-"build" command build web site.
+"build"コマンドを使うと、Webサイトを構築できます。
 
   giblog build
 
-You need to change directory to "mysite" before run "build" command.
+「build」コマンドを実行する前に、「mysite」にディレクトリを変更する必要があります。
 
   cd mysite
 
-If you use "--home" option, you don't need to change directory.
+「--home」オプションを使用した場合は、ディレクトリを変更する必要はありません。
 
   giblog build --home /home/kimoto/mysite
 
-What is build process?
+構築プロセスとは、いったい何でしょうか。
 
-Build process is writen in "run" method of "lib/Giblog/Command/build.pm".
+構築プロセスは「lib/Giblog/Command/build.pm」の中の「run」メソッドに書かれています。
 
-Main part of build process is combination of L<Giblog::API>.
+構築プロセスの主な部分は、L<Giblog::API|http://localhost/Giblog/API.html>の組み合わせです。
   
   # "lib/Giblog/Command/build.pm" in web site created by "new_blog" command
   package Giblog::Command::build;
@@ -290,30 +226,30 @@ Main part of build process is combination of L<Giblog::API>.
     $self->create_list;
   }
 
-"run" method read all template files in "templates" directory, and edit them, and wrtie output to file in "public" directory.
+「run」メソッドは、「templates」ディレクトリの中のすべてのテンプレートファイルを読み込み、編集し、「public」ディレクトリの中のファイルへ、出力を書き込みます。
 
-You can edit this build process by yourself if you need.
+もし必要であれば、自分自身でこの構築プロセスを編集できます。
 
-If you need to understand APIs in run method, see L<Giblog::API>.
+runメソッドの中のAPIを理解する必要がある場合は、L<Giblog::API|http://localhost/Giblog/API.html>を見てください。
 
-=head2 Serve web site
+=head2 Webサイトのサーブ
 
-If you have L<Mojolicious>, you can build and serve web site.
+もしMojoliciousを持っていれば、Webサイトの構築とサーブができます。
 
    morbo serve.pl
 
-You see the following message.
+以下のメッセージが表示されます。
 
    Server available at http://127.0.0.1:3000
    Server start
 
-If files in "templates" directory is updated, web site is build and this server is reloaded automatically.
+「templates」ディレクトリの中のファイルが、更新されると、ビルドされ、サーバーは自動的にリロードされます。
 
-=head1 AUTHOR
+=head1 著者
 
-Yuki Kimoto, C<< <kimoto.yuki at gmail.com> >>
+Perlゼミ(木本裕紀), C<< <kimoto.yuki at gmail.com> >>
 
-=head1 LICENSE AND COPYRIGHT
+=head1 ライセンスとコピーライト
 
 Copyright 2018 Yuki Kimoto.
 
@@ -324,5 +260,3 @@ copy of the full license at:
 L<http://www.perlfoundation.org/artistic_license_2_0>
 
 =cut
-
-1;

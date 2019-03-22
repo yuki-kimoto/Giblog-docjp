@@ -12,7 +12,7 @@
       <div class="header">
         <!-- header -->
 <h1>
-  <a href="/">Giblog - git世代のためのブログ作成ツール</a>
+  <a class="site-title" href="/">Giblog - git世代のためのブログ作成ツール</a>
 </h1>
 
       </div>

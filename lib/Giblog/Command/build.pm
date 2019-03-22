@@ -4,6 +4,7 @@ use base 'Giblog::Command';
 
 use strict;
 use warnings;
+use utf8;
 
 use Pod::Simple::XHTML;
 
@@ -49,6 +50,9 @@ sub run {
       $parser->parse_string_document("$pod");
       
       $content = $output;
+
+      # Relative URL
+      $content =~ s|http://localhost||g;
       
       $data->{content} = $content;
 
@@ -90,7 +94,7 @@ sub parse_title {
   
   my $content = $data->{content};
   my $title;
-  if ($content =~ /=head1 NAME(.*?)=/s) {
+  if ($content =~ /=head1 名前(.*?)=/s) {
     $title = $1;
     $title =~ s/^\s*//;
     $title =~ s/\s+$//;
@@ -104,7 +108,7 @@ sub parse_description {
   
   my $content = $data->{content};
   my $description;
-  if ($content =~ /=head1 DESCRIPTION(.*?)=/s) {
+  if ($content =~ /=head1 説明(.*?)=/s) {
     $description = $1;
     $description =~ s/^\s*//;
     $description =~ s/\s+$//;
