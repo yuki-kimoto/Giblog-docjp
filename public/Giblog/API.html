@@ -176,13 +176,19 @@
 
 <p>モジュール名に対応するプロトタイプディレクトリが見つからなかった場合は、例外が発生します。</p>
 
+<h2 id="copy_static_files_to_public">copy_static_files_to_public</h2>
+
+<pre><code>$api-&gt;copy_static_files_to_public;</code></pre>
+
+<p>「templates/static」ディレクトリの中の静的ファイルを「public」ディレクトリにコピーします。</p>
+
 <h2 id="get_templates_files">get_templates_files</h2>
 
-<pre><code>$api-&gt;get_templates_files;</code></pre>
+<pre><code>my $files = $api-&gt;get_templates_files;</code></pre>
 
 <p>ホームディレクトリの中の「templates」ディレクトリからファイル名の一覧を取得します。</p>
 
-<p>「templates/common」ディレクトリと隠しファイル(「.」で始まるもの) は含まれません。</p>
+<p>「templates/common」ディレクトリと「templates/static」ディレクトリと隠しファイル(「.」で始まるもの) は含まれません。</p>
 
 <p>取得したファイル名は「templates」ディレクトリからの相対パスです。</p>
 

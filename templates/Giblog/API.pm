@@ -149,13 +149,19 @@ Webサイトのホームディレクトリを作成し、プロトタイプデ�
 
 モジュール名に対応するプロトタイプディレクトリが見つからなかった場合は、例外が発生します。
 
+=head2 copy_static_files_to_public
+
+  $api->copy_static_files_to_public;
+
+「templates/static」ディレクトリの中の静的ファイルを「public」ディレクトリにコピーします。
+
 =head2 get_templates_files
 
-  $api->get_templates_files;
+  my $files = $api->get_templates_files;
 
 ホームディレクトリの中の「templates」ディレクトリからファイル名の一覧を取得します。
 
-「templates/common」ディレクトリと隠しファイル(「.」で始まるもの) は含まれません。
+「templates/common」ディレクトリと「templates/static」ディレクトリと隠しファイル(「.」で始まるもの) は含まれません。
 
 取得したファイル名は「templates」ディレクトリからの相対パスです。
 

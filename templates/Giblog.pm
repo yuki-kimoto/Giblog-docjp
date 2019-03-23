@@ -107,7 +107,7 @@ CSSは、スマートフォンサイトに適合しており、基本的な構�
 
 B<3. ブログ>
 
-"new_blog" command create empty website. 
+「new_blog」コマンドで、ブログを作成さいます。
 
   giblog new_blog mysite
 
@@ -141,7 +141,7 @@ CSSは、スマートフォンサイトに適合しており、基本的な構�
 
 =head2 Webサイトの構築
 
-"build"コマンドを使うと、Webサイトを構築できます。
+「build」コマンドを使うと、Webサイトを構築できます。
 
   giblog build
 
