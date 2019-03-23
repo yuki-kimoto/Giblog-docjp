@@ -178,6 +178,9 @@ CSSは、スマートフォンサイトに適合しており、基本的な構�
     # Read config
     my $config = $api->read_config;
     
+    # Copy static files to public
+    $api->copy_static_files_to_public;
+
     # Get files in templates directory
     my $files = $api->get_templates_files;
     
