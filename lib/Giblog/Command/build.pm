@@ -59,7 +59,7 @@ sub run {
       $data->{file} =~ s/\.pod$/.html/;
       
       # Top page
-      if ($data->{file} eq 'lib/Giblog.html') {
+      if ($data->{file} eq 'Giblog.html') {
         $data->{file} = 'index.html';
       }
     }
