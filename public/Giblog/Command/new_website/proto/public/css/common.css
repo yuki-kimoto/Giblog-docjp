@@ -231,6 +231,12 @@
   <ul>
     <li><a href="/">Giblog</a></li>
     <li><a href="/Giblog/API.html">Giblog::API</a></li>
+    <li><a href="/Giblog/Command.html">Giblog::Command</a></li>
+    <li><a href="/Giblog/Command/new.html">Giblog::Command::new</a></li>
+    <li><a href="/Giblog/Command/new_website.html">Giblog::Command::new_website</a></li>
+    <li><a href="/Giblog/Command/new_blog.html">Giblog::Command::new_blog</a></li>
+    <li><a href="/Giblog/Command/add.html">Giblog::Command::add</a></li>
+    <li><a href="/Giblog/Command/build.html">Giblog::Command::build</a></li>
   </ul>
 </div>
 

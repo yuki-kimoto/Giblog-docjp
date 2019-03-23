@@ -157,7 +157,7 @@ CSSは、スマートフォンサイトに適合しており、基本的な構�
 
 構築プロセスは「lib/Giblog/Command/build.pm」の中の「run」メソッドに書かれています。
 
-構築プロセスの主な部分は、L<Giblog::API|http://localhost/Giblog/API.html>の組み合わせです。
+構築プロセスの主な部分は、L<Giblog::API>の組み合わせです。
   
   # "lib/Giblog/Command/build.pm" in web site created by "new_blog" command
   package Giblog::Command::build;
@@ -230,7 +230,7 @@ CSSは、スマートフォンサイトに適合しており、基本的な構�
 
 もし必要であれば、自分自身でこの構築プロセスを編集できます。
 
-runメソッドの中のAPIを理解する必要がある場合は、L<Giblog::API|http://localhost/Giblog/API.html>を見てください。
+runメソッドの中のAPIを理解する必要がある場合は、L<Giblog::API>を見てください。
 
 =head2 Webサイトのサーブ
 

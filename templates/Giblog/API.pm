@@ -14,7 +14,7 @@ Giblog::APIではHTMLコンテンツを扱うためのメソッドを定義し�
 
   my $api = Giblog::API->new(%params);
 
-L<Giblog::API|http://localhost/Giblog/API.html>オブジェクトを作成します。
+L<Giblog::API>オブジェクトを作成します。
 
 B<パラメーター:>
 

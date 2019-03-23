@@ -1,34 +1,23 @@
-package Giblog::Command;
+=encoding utf8
 
-use strict;
-use warnings;
-
-sub new {
-  my $class = shift;
-  
-  my $self = {@_};
-  
-  return bless $self, ref $class || $class;
-}
-
-sub api { shift->{api} }
-
-1;
-
-=head1 NAME
+=head1 名前
 
 Giblog::Command - command
 
-=head1 METHODS
+=head1 説明
+
+コマンドの基底クラス
+
+=head1 メソッド
 
 =head2 new
 
   $command->new(%args);
 
-Create command object.
+L<Giblog::Command>オブジェクトを生成します。
 
 =head2 api
 
   $command->api;
 
-Get L<Giblog::API> object.
+L<Giblog::API>オブジェクトを取得します。

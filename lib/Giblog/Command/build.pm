@@ -43,24 +43,23 @@ sub run {
 
       my $pod = $content;
       my $parser = Pod::Simple::XHTML->new;
-      $parser->perldoc_url_prefix('https://metacpan.org/pod/');
       $parser->$_('') for qw(html_header html_footer);
       $parser->strip_verbatim_indent(\&_indentation);
       $parser->output_string(\(my $output));
       $parser->parse_string_document("$pod");
       
       $content = $output;
-
-      # Relative URL
-      $content =~ s|http://localhost||g;
+      
+      $content =~ s|\Qhttp://search.cpan.org/perldoc?\E([^"]+)|my $name = $1; $name =~ s!::!/!g; $name .= ".html"; "/$name";|ge;
       
       $data->{content} = $content;
 
       # Fix extension
       $data->{file} =~ s/\.pm$/.html/;
+      $data->{file} =~ s/\.pod$/.html/;
       
       # Top page
-      if ($data->{file} eq 'Giblog.html') {
+      if ($data->{file} eq 'lib/Giblog.html') {
         $data->{file} = 'index.html';
       }
     }

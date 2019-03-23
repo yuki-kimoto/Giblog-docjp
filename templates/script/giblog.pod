@@ -1,0 +1,27 @@
+=encoding utf8
+
+=head1 名前
+
+giblog - Giblogコマンド
+
+=head1 使い方
+
+  Usage: giblog [OPTIONS] [COMMAND] [ARGS]
+
+    giblog new mysite
+    giblog new_website mysite
+    giblog new_blog mysite
+    giblog add
+    giblog build
+    giblog -H /home/kimoto/mysite add
+    giblog --home /home/kimoto/mysite build
+
+  Options:
+    -H, --home <directory>         Home directory
+    -h, --help                     Show this message
+
+=head1 説明
+
+L<Giblog::Command|http://localhost/Giblog/Command.html>のサブクラスとして実装されているコマンドを実行します。
+
+=cut
