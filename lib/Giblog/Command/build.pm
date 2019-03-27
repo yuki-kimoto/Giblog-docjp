@@ -29,65 +29,114 @@ sub run {
   
   for my $file (@$files) {
     
-    my $data = {file => $file};
-    
-    # Get content from file in templates directory
-    $api->get_content($data);
-
-    # Parse POD
-    if ($data->{file} =~ /\.pm$/) {
-      my $content = $data->{content};
-
-      # Parse title
-      parse_title($api, $data);
-
-      # Parse description
-      parse_description($api, $data);
-
-      my $pod = $content;
-      my $parser = Pod::Simple::XHTML->new;
-      $parser->$_('') for qw(html_header html_footer);
-      $parser->strip_verbatim_indent(\&_indentation);
-      $parser->output_string(\(my $output));
-      $parser->parse_string_document("$pod");
+    # CGI
+    if ($file =~ /\.cgi$/) {
       
-      $content = $output;
-      
-      $content =~ s|\Qhttp://search.cpan.org/perldoc?\E([^"]+)|my $name = $1; $name =~ s!::!/!g; $name .= ".html"; "/$name";|ge;
-      
-      $data->{content} = $content;
+      # CGI content
+      my $cgi_content;
+      {
+        # Data
+        my $data = {file => $file};
 
-      # Fix extension
-      $data->{file} =~ s/\.pm$/.html/;
-      $data->{file} =~ s/\.pod$/.html/;
-      
-      # Top page
-      if ($data->{file} eq 'Giblog.html') {
-        $data->{file} = 'index.html';
+        # Get content from file in templates directory
+        $api->get_content($data);
+        
+        # CGI content
+        $cgi_content = $data->{content};
       }
+      
+      # Data
+      my $data = {file => $file};
+      
+      # Read common templates
+      $api->read_common_templates($data);
+      
+      # Title(Replaced by CGI)
+      $data->{title} = '$TITLE';
+      
+      # Add meta title
+      $api->add_meta_title($data);
+      
+      # Content(Replaced by CGI)
+      $data->{content} = '$CONTENT';
+      
+      # Build entry html
+      $api->build_entry($data);
+      
+      # Build whole html
+      $api->build_html($data);
+      
+      # Add html to CGI DATA section
+      $data->{content} = "$cgi_content\n$data->{content}";
+      
+      # Write to public file
+      $api->write_to_public_file($data);
+      
+      # Do executable
+      chmod 0755, $api->rel_file("public/$file");
     }
-    # Parse Giblog syntax
+    # HTML, etc
     else {
-      $api->parse_giblog_syntax($data);
+      my $data = {file => $file};
+      
+      # Get content from file in templates directory
+      $api->get_content($data);
+
+      # Parse POD
+      if ($data->{file} =~ /\.pm$/) {
+        my $content = $data->{content};
+
+        # Parse title
+        parse_title($api, $data);
+
+        # Parse description
+        parse_description($api, $data);
+
+        my $pod = $content;
+        my $parser = Pod::Simple::XHTML->new;
+        $parser->$_('') for qw(html_header html_footer);
+        $parser->strip_verbatim_indent(\&_indentation);
+        $parser->output_string(\(my $output));
+        $parser->parse_string_document("$pod");
+        
+        $content = $output;
+        
+        $content =~ s|\Qhttp://search.cpan.org/perldoc?\E([^"]+)|my $name = $1; $name =~ s!::!/!g; $name .= ".html"; "/$name";|ge;
+        
+        $data->{content} = $content;
+
+        # Fix extension
+        $data->{file} =~ s/\.pm$/.html/;
+        $data->{file} =~ s/\.pod$/.html/;
+        
+        # Top page
+        if ($data->{file} eq 'Giblog.html') {
+          $data->{file} = 'index.html';
+        }
+      }
+      # Parse Giblog syntax
+      else {
+        $api->parse_giblog_syntax($data);
+      }
+
+      # Read common templates
+      $api->read_common_templates($data);
+      
+      # Add meta title
+      $api->add_meta_title($data);
+
+      # Add meta description
+      $api->add_meta_description($data);
+
+      # Build entry html
+      $api->build_entry($data);
+      
+      # Build whole html
+      $api->build_html($data);
+      
+      # Write to public file
+      $api->write_to_public_file($data);
     }
-
-    # Read common templates
-    $api->read_common_templates($data);
-    
-    # Add meta title
-    $api->add_meta_title($data);
-
-    # Add meta description
-    $api->add_meta_description($data);
-
-    # Build entry html
-    $api->build_entry($data);
-    
-    # Build whole html
-    $api->build_html($data);
-    
-    # Write to public file
-    $api->write_to_public_file($data);
   }
 }
 

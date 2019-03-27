@@ -215,15 +215,3 @@ sub build_html {
 }
 
 __DATA__
-
-<html>
-  <head>
-    <title>$TITLE</title>
-    <style>
-      body { background:red; }
-    </style>
-  </head>
-  <body>
-    $CONTENT
-  </body>
-</html>
