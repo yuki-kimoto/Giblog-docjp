@@ -1,35 +1,25 @@
-package Giblog::Command::new;
+=encoding utf8
 
-use base 'Giblog::Command';
+=head1 名前
 
-use strict;
-use warnings;
+Giblog::Command::new - 空のWebサイト作成コマンド
 
-sub run {
-  my ($self, @argv) = @_;
-  
-  my $website_name = shift @argv;
+=head1 説明
 
-  my $api = $self->api;
-  
-  my $module_name = ref $self;
-  
-  $api->create_website_from_proto($website_name, $module_name);
-}
+L<Giblog::Command::new>は、空のWebサイトを作成するためのコマンドです。
 
-1;
+L<Giblog::Command::new>を継承して、L<Giblog::Command::new_blog>やL<Giblog::Command::new_website>のような、オリジナルのWebサイト作成コマンドを作ることもできます。
 
-=head1 NAME
+=head1 メソッド
 
-Giblog::Command::new - new command
-
-=head1 METHODS
-
-L<Giblog::Command::new> inherits all methods from L<Giblog::Command> and
-implements the following new ones.
+L<Giblog::Command::new>はL<Giblog::Command>からすべてのメソッドを継承しており、次の新しいメソッドを実装しています。
 
 =head2 run
 
-  $command->run(@argv);
+  $command->run($website_name);
 
-Execute new command.
+Webサイト名を指定して、Webサイトを作成します。
+
+すべてのコンテンツは、C<proto>ディレクトリからコピーされます。
+
+もしモジュールがロードされたパスが"/path/Giblog/Command/new.pm"の場合は、C<proto>ディレクトリのパスは"/path/Giblog/Command/new/proto"になります。

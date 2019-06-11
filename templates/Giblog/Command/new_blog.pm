@@ -7,11 +7,16 @@ use warnings;
 
 1;
 
-=head1 NAME
+=encoding utf8
 
-Giblog::Command::new_blog - new_blog command
+=head1 名前
 
-=head1 METHODS
+Giblog::Command::new_blog - ブログ作成コマンド
 
-L<Giblog::Command::new_blog> inherits all methods from L<Giblog::Command::new> and
-implements the following new ones.
+=head1 説明
+
+L<Giblog::Command::new_blog>はブログを作成するためのコマンドです。
+
+=head1 メソッド
+
+L<Giblog::Command::new_blog>はL<Giblog::Command::new>からすべてのメソッドを継承しています。

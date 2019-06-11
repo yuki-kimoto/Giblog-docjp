@@ -1,17 +1,13 @@
-package Giblog::Command::new_website;
+=encoding utf8
 
-use base 'Giblog::Command::new';
+=head1 名前
 
-use strict;
-use warnings;
+Giblog::Command::new_website - Webサイト作成コマンド
 
-1;
+=head1 説明
 
-=head1 NAME
+L<Giblog::Command::new_website>は、Webサイトを作成するためのコマンドです。
 
-Giblog::Command::new_website - new_website command
+=head1 メソッド
 
-=head1 METHODS
-
-L<Giblog::Command::new_website> inherits all methods from L<Giblog::Command::new> and
-implements the following new ones.
+L<Giblog::Command::new_website>はL<Giblog::Command::new>からすべてのメソッドを継承しています。
