@@ -13,23 +13,25 @@ sub run {
 
 1;
 
-=head1 NAME
+=encoding utf8
 
-Giblog::Command::build - Website building command
+=head1 名前
 
-=head1 DESCRIPTION
+Giblog::Command::build - Webサイト構築コマンド
 
-L<Giblog::Command::build> is website building command.
+=head1 説明
 
-=head1 METHODS
+L<Giblog::Command::build>はWebサイトを構築するためのコマンドです。
 
-L<Giblog::Command::build> inherits all methods from L<Giblog::Command> and
-implements the following new ones.
+=head1 メソッド
+
+L<Giblog::Command::build>はL<Giblog::Command>のすべてのメソッドを継承しており、次の新しいメソッドを実装しています。
 
 =head2 run
 
   $command->run;
 
-Build website.
+Webサイトを構築します。
 
-This method is planed to be overridden in subclass.
+このメソッドは、サブクラスでオーバーライドされることが予定されています。
+

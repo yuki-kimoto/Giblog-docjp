@@ -33,25 +33,25 @@ sub run {
 
 =encoding utf8
 
-=head1 NAME
+=head1 名前
 
-Giblog::Command::add - new blog entry adding command
+Giblog::Command::add - 新しいブログエントリーを追加するコマンド
 
-=head1 DESCRIPTION
+=head1 説明
 
-L<Giblog::Command::add> is new blog entry adding command.
+L<Giblog::Command::add>は、新しいブログエントリーを追加するためのコマンドです。
 
-=head1 METHODS
+=head1 メソッド
 
-L<Giblog::Command::add> inherits all methods from L<Giblog::Command> and
-implements the following new ones.
+L<Giblog::Command::add>はL<Giblog::Command>からすべてのメソッドを継承しており、次の新しいメソッドを実装しています。
 
 =head2 run
 
   $command->run;
 
-Create a new blog entry page file in "templates/blog" directory.
+「templates/blog」ディレクトリの中に新しいブログエントリーページのファイルを作成します。
 
-The file contains date and time.
+ファイルは、日付と時刻を含みます。
 
   templates/blog/20190416153053.html
+
