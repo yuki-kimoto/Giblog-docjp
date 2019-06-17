@@ -2,13 +2,37 @@
 
 =head1 名前
 
-Giblog - git世代のためのブログ生成ツール
+Giblog - Gitで管理できるWebサイトとブログの生成ツール
+
+=begin html
+
+<p>
+  <b>Webサイト</b>
+</p>
+<p>
+  <a href="https://new-website-example.giblog.net/"><img src="https://github.com/yuki-kimoto/giblog/raw/master/images/giblog-website.png"></a>
+</p>
+<p>
+  <a href="https://new-website-example.giblog.net/">Website Example</a>
+</p>
+<p>
+  <b>ブログ</b>
+</p>
+<p>
+  <a href="https://new-blog-example.giblog.net/"><img src="https://github.com/yuki-kimoto/giblog/raw/master/images/giblog-blog.png"></a>
+</p>
+<p>
+  <a href="https://new-blog-example.giblog.net/">Blog Example</a>
+</p>
+
+=end html
 
 =head1 説明
 
-GiblogはPerlで書かれたブログ生成ツールです。Webサイトとブログを簡単に作成できます。作られたファイルはすべて静的なHTMLで、gitを使って管理することができます。
-
-Giblogは1.0へのリリースに向かってベータテスト中です。機能が警告なく変更されることがあるので、注意してください。
+GiblogはPerlで書かれたWebサイトとブログの生成ツールです。
+Webサイトとブログを簡単に作成できます。
+作られるファイルはすべて静的なファイルで、gitを使って管理することができます。
+Perlを使って、Webサイトを自由にカスタマイズできます。
 
 =head1 使い方
   
@@ -47,33 +71,31 @@ Giblogは、以下の機能を持っています。
 
 =item * Webサイトとブログ作成の両方に対応。
 
-=item * Linux、Mac OS、Windows対応。Windowsでは、msys2のインストールを推奨。
+=item * gitですべてのファイルを管理できる
 
-=item * スマートフォン対応を意識した、デフォルトのCSSを提供。
+=item * Linux、macOS、Windows対応。Windowsでは、msys2のインストールを推奨。
 
-=item * コンテンツを、トップ、ボトム、サイドバー、ヘッダー、フッター、HTMLヘッダで囲んで出力。
+=item * スマートフォン対応のデフォルトのCSSを提供。
 
-=item * pタグをを自動追加。preタグの中でE<lt>、E<gt>を、自動的にエスケープ。
+=item * ヘッダ・フッタ・サイドバーをサポート
 
-=item * 最初の見出しタグ(h1～h6)から自動的にtitleに設定。
+=item * コンテンツのトップとボトムをカスタマイズ可能。
 
-=item * 最初の段落を自動的にdescriptionに設定。
+=item * HTMLヘッダをカスタマイズ可能。
 
-=item * 機能のカスタマイズは、自由自在。すべてをなくすことも、自由に選ぶことも、機能を追加することも可能。
+=item * 自動的な改行。pタグを自動追加。
 
-=item * 機能の追加では、一覧ページをカスタマイズしたり、マークダウンを使ったり、Twitterカードを設定したりできます。
+=item * preタグの中でE<lt>、E<gt>を、自動的にエスケープ。
 
-=item * Mojoliciousのmorboコマンドを使って、Webサーバーを起動してWebサイトを確認可能。コンテンツやヘッダなどの変更を検知して、自動的に再構築されます。
+=item * 最初の見出しタグ(h1～h6)から自動的にtitleを設定。
 
-=item * ベンチマークでは、私の標準的なLinux環境において、645ページを、0.78秒で構築。
+=item * 最初の段落タグ(p)から自動的にdescriptionを設定。
 
-=item * JavaScriptの利用制限なし。アフェリエイト広告を張ることも自由。
+=item * Perlを使ってWebサイトを自由にカスタマイズできる
 
-=item * gitでファイルを管理して、さくらのレンタルサーバーなどに、配置すれば、HTTPSに対応した情報発信サイトを、個数無制限・低価格(ディスク容量100Gで515円)で作成できます。
+=item * ローカル環境でWebサイトを確認可能。コンテンツの変更を検知して、自動的に再構築(Mojoliciousが必要)
 
-=item * Github Pagesを利用すれば、手順が少し難しいですが、HTTPSに対応した情報発信サイトを無料で作成できます。
-
-=item * Perlゼミのサイト構築に実際に利用されています。
+=item * 速い。標準的なLinux環境で、645ページを、0.78秒で構築。
 
 =back
 
@@ -254,11 +276,9 @@ Perlゼミ(木本裕紀), C<< <kimoto.yuki at gmail.com> >>
 
 =head1 ライセンスとコピーライト
 
-Copyright 2018 Yuki Kimoto.
+Copyright 2018-2019 Yuki Kimoto.
 
-This program is free software; you can redistribute it and/or modify it
-under the terms of the the Artistic License (2.0). You may obtain a
-copy of the full license at:
+このプログラムはフリーソフトウェアです。 Artistic License（2.0）の条件の下でそれを再配布および/または修正することができます。あなたは完全なライセンスのコピーを以下から入手することができます。
 
 L<http://www.perlfoundation.org/artistic_license_2_0>
 
