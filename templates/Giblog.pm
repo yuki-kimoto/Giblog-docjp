@@ -2,7 +2,7 @@
 
 =head1 名前
 
-Giblog - Gitで管理できるWebサイトとブログの生成ツール
+Giblog - Gitで管理できるWebサイトとブログの作成ツール
 
 =begin html
 
@@ -13,7 +13,7 @@ Giblog - Gitで管理できるWebサイトとブログの生成ツール
   <a href="https://new-website-example.giblog.net/"><img src="https://github.com/yuki-kimoto/giblog/raw/master/images/giblog-website.png"></a>
 </p>
 <p>
-  <a href="https://new-website-example.giblog.net/">Website Example</a>
+  <a href="https://new-website-example.giblog.net/">Webサイトのサンプル</a>
 </p>
 <p>
   <b>ブログ</b>
@@ -22,14 +22,14 @@ Giblog - Gitで管理できるWebサイトとブログの生成ツール
   <a href="https://new-blog-example.giblog.net/"><img src="https://github.com/yuki-kimoto/giblog/raw/master/images/giblog-blog.png"></a>
 </p>
 <p>
-  <a href="https://new-blog-example.giblog.net/">Blog Example</a>
+  <a href="https://new-blog-example.giblog.net/">ブログのサンプル</a>
 </p>
 
 =end html
 
 =head1 説明
 
-GiblogはPerlで書かれたWebサイトとブログの生成ツールです。
+GiblogはPerlで書かれたWebサイトとブログの作成ツールです。
 Webサイトとブログを簡単に作成できます。
 作られるファイルはすべて静的なファイルで、gitを使って管理することができます。
 Perlを使って、Webサイトを自由にカスタマイズできます。
@@ -54,7 +54,7 @@ Perlを使って、Webサイトを自由にカスタマイズできます。
   # Webサイトを構築
   giblog build
   
-  # Webサイトをサーブ(Mojoliciousが必要です)
+  # ローカル環境でWebサイトを確認(Mojoliciousが必要)
   morbo serve.pl
 
   # ホームディレクトリを指定して新しいエントリーを追加
@@ -103,63 +103,63 @@ Giblogは、以下の機能を持っています。
 
 =head2 Webサイトの作成
 
-３つのプロトタイプからWebサイトを作成できます。
+B<1. 空のWebサイトを作成>
 
-B<1. 空のWebサイト>
-
-「new」コマンドで、空のWebサイトを作成します。「mysite」はWebサイトの名前の一例です。
+「new」コマンドで、空のWebサイトを作成します。「mysite」はWebサイトの名前のひとつの例です。
 
   giblog new mysite
 
-もし空のWebサイトを作成したい場合は、このプロトタイプを選んでください。
+空のWebサイトを作成したい場合は、このコマンドを選んでください。
+テンプレートとCSSは空で、最低限のWebサイトの構築処理のみを提供します。
 
-テンプレートとCSSは空で、最低限の構築プロセスのみを提供します。
-
-B<2.  Webサイト>
+B<2.  Webサイトを作成>
 
 「new_website」コマンドで、空のWebサイトを作成します。
 
   giblog new_website mysite
 
-もし、Webサイトを作成したい場合は、このプロトタイプを選んでください。
-
+Webサイトを作成したい場合は、このコマンドを選んでください。
 トップページのテンプレート「templates/index.html」が作成されます。
 
-CSSは、スマートフォンサイトに適合しており、基本的な構築プロセスが提供されます。
+CSSは、レスポンシブデザインで、スマートフォンに対応しています。
+基本的なWebサイトのビルドスクリプトが提供されます。
 
-B<3. ブログ>
+B<3. ブログを作成>
 
-「new_blog」コマンドで、ブログを作成さいます。
+「new_blog」コマンドで、ブログを作成します。
 
   giblog new_blog mysite
 
-ブログを作成したい場合は、このプロトタイプを選んでください。
-
+ブログを作成したい場合は、このコマンドを選んでください。
 7日間のエントリーを表示したトップページ「templates/index.html」が作成されます。
-
 すべてのページへのリンクを表示した「templates/list.html」が作成されます。
 
-CSSは、スマートフォンサイトに適合しており、基本的な構築プロセスが提供されます。
+CSSは、レスポンシブデザインで、スマートフォンに対応しています。
+基本的なブログの構築処理が提供されます。
 
-=head2 エントリーページの追加
+=head2 ブログのエントリーページの追加
 
-「add」コマンドを使って、ブログのエントリページを追加することができます。
-  
-  giblog add
-
-「add」コマンドを実行する前に、「mysite」にディレクトリを変更する必要があります。
+他のディレクトリにいる場合は、「add」コマンドを実行する前に「mysite」にディレクトリを変更する必要があります。
 
   cd mysite
 
-「--home」オプションを使う場合は、ディレクトリを変更する必要はありません。
-
-  giblog add --home /home/kimoto/mysite
+「add」コマンドを使って、ブログのエントリページを追加します。
+  
+  giblog add
 
 作成されたファイル名は、例えば、以下のようになります。
 
   templates/blog/20080108132865.html
 
-このファイル名は、日付と時刻を含みます。
+このファイル名は、現在の日付と時刻を含みます。
+
+新しく記事を書くには、このファイルを開いて、 h2とコンテンツを書きます。
+
+  <h2>How to use Giblog</h2>
+
+  Giblogの使い方。これは...。
+
+ヘッダとフッタなどのコンテンツを囲むパーツは、自動的に追加されます。
 
 =head2 Webサイトの構築
 

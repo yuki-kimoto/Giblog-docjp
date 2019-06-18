@@ -72,8 +72,8 @@
   }
   
   .entry li p {
-    margin-top:5px;
-    margin-bottom:5px;
+    margin-top:4px;
+    margin-bottom:4px;
     letter-spacing:1px;
   }
   
@@ -114,9 +114,9 @@
     color:white;
   }
   h2 {
-    font-size:18px;
+    font-size:20px;
     padding:10px 0;
-    letter-spacing:1px;
+    letter-spacing:2px;
   }
   h2 a, h2 a:visited {
     text-decoration:none;
@@ -140,9 +140,9 @@
   p {
     font-size:17px;
     color:#000;
-    margin:10px 0 13px 0;
-    line-height:1.5;
-    letter-spacing:0.5px;
+    margin:17px 10px 17px 10px;
+    line-height:1.6;
+    letter-spacing:0.8px;
   }
   pre {
     font-size:16px;
@@ -152,6 +152,7 @@
     padding:10px 15px;
     margin:10px 0;
     line-height:1.3;
+    margin:16px 10px 16px 10px;
   }
   blockquote {
     font-size:16px;
