@@ -159,7 +159,87 @@ CSSは、レスポンシブデザインで、スマートフォンに対応し�
 
   Giblogの使い方。これは...。
 
-ヘッダとフッタなどのコンテンツを囲むパーツは、自動的に追加されます。
+ヘッダとフッタなどのコンテンツを囲むパーツは、構築処理で、自動的に追加されます。
+
+=head2 コンテンツページの追加
+
+コンテンツページを作成したい場合は、ファイルを「templates」ディレクトリの中に配置します。
+
+  templates/access.html
+  templates/profile.html
+
+新しく記事を書くには、このファイルを開いて、 h2とコンテンツを書きます。
+
+  <h2>How to use Giblog</h2>
+
+  Giblogの使い方。これは...。
+
+ヘッダとフッタなどのコンテンツを囲むパーツは、構築処理で、自動的に追加されます。
+
+サブディレクトリに、ファイルを置くこともできます。
+
+  templates/profile/more.html
+
+「templates/static」と「templates/common」は特別なディレクトリであることに注意してください。
+これらのディレクトリに、コンテントページのファイルを配置しないでください。
+
+  # コンテンツファイルを配置してはいけない特別なディレクトリ
+  templates/static
+  templates/common
+
+=head2 静的ページの追加
+
+CSSや画像やJavaScriptなどの静的なファイルを追加したいときは
+それらのファイルを「templates/static」ディレクトリに配置してください。
+
+「templates/static」ディレクトリにあるファイルは、構築処理で、単にコピーされます。
+
+  templates/static/js/jquery.js
+  templates/static/images/logo.png
+  templates/static/css/more.css
+
+=head2 ヘッダ、フッタ、サイドバー、コンテンツの上、コンテンツの下のカスタマイズ
+
+ヘッダ、フッタ、サイドバー、コンテンツの上、コンテンツの下のカスタマイズができます。
+  
+  ------------------------
+  ヘッダ
+  ------------------------
+  コンテンツの上   |
+  -----------------|
+                   |サイド
+  コンテンツ       |バー
+                   |
+  -----------------|
+  コンテンツの下   |
+  ------------------------
+  フッタ
+  ------------------------
+
+これらの部分を編集したい場合は、以下のファイルを編集してください。
+
+  templates/common/header.html     ヘッダ
+  templates/common/top.html        コンテンツの上
+  templates/common/side.html       サイドバー
+  templates/common/bottom.html     コンテンツの下
+  templates/common/footer.html     フッタ
+
+=head2 HTMLヘッダの編集
+
+HTMLヘッダをカスタマイズすることができます。
+
+  <html>
+    <head>
+      <!-- HTML header -->
+    </head>
+    <body>
+    
+    </body>
+  </html>
+
+HTMLヘッダを編集したい場合は、以下のファイルを編集してください。
+
+  templates/common/meta.html
 
 =head2 Webサイトの構築
 
