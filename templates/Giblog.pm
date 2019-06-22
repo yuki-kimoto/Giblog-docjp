@@ -243,23 +243,17 @@ HTMLヘッダを編集したい場合は、以下のファイルを編集して�
 
 =head2 Webサイトの構築
 
+他のディレクトリにいる場合は「build」コマンドを実行する前に「mysite」にディレクトリを変更してください。
+
+  cd mysite
+
 「build」コマンドを使うと、Webサイトを構築できます。
 
   giblog build
 
-「build」コマンドを実行する前に、「mysite」にディレクトリを変更する必要があります。
+構築処理とは、いったい何ですか?\
 
-  cd mysite
-
-「--home」オプションを使用した場合は、ディレクトリを変更する必要はありません。
-
-  giblog build --home /home/kimoto/mysite
-
-構築プロセスとは、いったい何でしょうか。
-
-構築プロセスは「lib/Giblog/Command/build.pm」の中の「run」メソッドに書かれています。
-
-構築プロセスの主な部分は、L<Giblog::API>の組み合わせです。
+構築処理は「lib/Giblog/Command/build.pm」の中の「run」メソッドに書かれています。
   
   # "lib/Giblog/Command/build.pm" in web site created by "new_blog" command
   package Giblog::Command::build;
@@ -299,6 +293,15 @@ HTMLヘッダを編集したい場合は、以下のファイルを編集して�
       # Parse title
       $api->parse_title_from_first_h_tag($data);
 
+      # Edit title
+      my $site_title = $config->{site_title};
+      if ($data->{file} eq 'index.html') {
+        $data->{title} = $site_title;
+      }
+      else {
+        $data->{title} = "$data->{title} - $site_title";
+      }
+
       # Add page link
       $api->add_page_link_to_first_h_tag($data, {root => 'index.html'});
 
@@ -331,15 +334,13 @@ HTMLヘッダを編集したい場合は、以下のファイルを編集して�
     $self->create_list;
   }
 
-「run」メソッドは、「templates」ディレクトリの中のすべてのテンプレートファイルを読み込み、編集し、「public」ディレクトリの中のファイルへ、出力を書き込みます。
+もし必要であれば、自分自身でこの構築処理をカスタマイズできます。
 
-もし必要であれば、自分自身でこの構築プロセスを編集できます。
-
-runメソッドの中のAPIを理解する必要がある場合は、L<Giblog::API>を見てください。
+runメソッドの中のAPIを理解したい場合は、L<Giblog::API>を見てください。
 
 =head2 Webサイトのサーブ
 
-もしMojoliciousを持っていれば、Webサイトの構築とサーブができます。
+もしL<Mojolicious>がインストールされていれば、Webサイトをローカル環境でチェックできます。
 
    morbo serve.pl
 
@@ -348,7 +349,11 @@ runメソッドの中のAPIを理解する必要がある場合は、L<Giblog::A
    Server available at http://127.0.0.1:3000
    Server start
 
-「templates」ディレクトリの中のファイルが、更新されると、ビルドされ、サーバーは自動的にリロードされます。
+ブラウザから上記のURLでWebサイトを確認できます。
+
+Webサイトは「templates」ディレクトリの中のファイルが変更されると
+自動的に再構築されます。
+手動で「build」コマンドを実行する必要はありません。
 
 =head1 著者
 
