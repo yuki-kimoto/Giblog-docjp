@@ -252,7 +252,7 @@ HTMLヘッダを編集したい場合は、以下のファイルを編集して�
 
   giblog build
 
-構築処理とは、いったい何ですか?\
+構築処理とは、いったい何ですか?
 
 構築処理は「lib/Giblog/Command/build.pm」の中の「run」メソッドに書かれています。
   
@@ -341,7 +341,7 @@ runメソッドの中のAPIを理解したい場合は、L<Giblog::API>を見て
 
 =head2 Webサイトのサーブ
 
-もしL<Mojolicious>がインストールされていれば、Webサイトをローカル環境でチェックできます。
+もしL<Mojolicious|https://metacpan.org/pod/Mojolicious>がインストールされていれば、Webサイトをローカル環境でチェックできます。
 
    morbo serve.pl
 
