@@ -356,6 +356,10 @@ Webサイトは「templates」ディレクトリの中のファイルが変更�
 自動的に再構築されます。
 手動で「build」コマンドを実行する必要はありません。
 
+=head1 Giblog公式サイト
+
+L<Giblog公式サイト|https://jp.giblog.net/>
+
 =head1 著者
 
 Perlゼミ(木本裕紀), C<< <kimoto.yuki at gmail.com> >>
