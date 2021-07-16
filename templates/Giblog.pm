@@ -53,7 +53,13 @@ Perlを使って、Webサイトを自由にカスタマイズできます。
 
   # Webサイトを構築
   giblog build
-  
+
+  # Webサイトのサーブ
+  $ giblog serve
+
+  # Webサイトの公開
+  $ giblog publish origin main
+
   # ローカル環境でWebサイトを確認(Mojoliciousが必要)
   morbo serve.pl
 
@@ -268,23 +274,23 @@ HTMLヘッダを編集したい場合は、以下のファイルを編集して�
 
   sub run {
     my ($self, @args) = @_;
-    
+
     # API
     my $api = $self->api;
-    
+
     # Read config
     my $config = $api->read_config;
-    
+
     # Copy static files to public
     $api->copy_static_files_to_public;
 
     # Get files in templates directory
     my $files = $api->get_templates_files;
-    
+
     for my $file (@$files) {
       # Data
       my $data = {file => $file};
-      
+
       # Get content from file in templates directory
       $api->get_content($data);
 
@@ -311,7 +317,7 @@ HTMLヘッダを編集したい場合は、以下のファイルを編集して�
 
       # Read common templates
       $api->read_common_templates($data);
-      
+
       # Add meta title
       $api->add_meta_title($data);
 
@@ -320,17 +326,17 @@ HTMLヘッダを編集したい場合は、以下のファイルを編集して�
 
       # Build entry html
       $api->build_entry($data);
-      
+
       # Build whole html
       $api->build_html($data);
-      
+
       # Write to public file
       $api->write_to_public_file($data);
     }
-    
+
     # Create index page
     $self->create_index;
-    
+
     # Create list page
     $self->create_list;
   }
@@ -356,17 +362,153 @@ Webサイトは「templates」ディレクトリの中のファイルが変更�
 自動的に再構築されます。
 手動で「build」コマンドを実行する必要はありません。
 
+=head1 設定ファイル
+
+Giblogの設定ファイルはC<giblog.conf>です。
+
+これはPerlスクリプトで、ハッシュリファレンスで設定を返します。
+
+  use strict;
+  use warnings;
+  use utf8;
+
+  # giblog.conf
+  {
+    site_title => 'mysite😄',
+    site_url => 'http://somesite.example',
+  }
+
+=head2 site_title
+
+  site_title => 'mysite😄'
+
+サイトタイトル。
+
+=head2 site_url
+
+  site_url => 'http://somesite.example'
+
+サイトURL。
+
+=head2 base_path
+
+  base_path => '/subdir'
+
+ベースパス。ベースパスは、あなたのサイトをサブディレクトリで配置するときに利用されいます。
+
+たとえば、Github PagesのプロジェクトページのURLが以下だったとしましょう。
+
+  https://yuki-kimoto.github.io/giblog-theme1-public/
+
+以下を指定します。
+
+  base_path => '/giblog-theme1-public'
+
+最初の文字は、スラッシュであるC</>で始まる必要があります。
+
+HTMLファイルは、C<public/giblog-theme1-public>ディレクトリに出力されます。
+
+=head1 メソッド
+
+これらのメソッドは、内部的なメソッドです。
+
+通常は、これらのメソッドを知る必要はありません。
+
+HTMLコンテンツを扱いたい場合はL<Giblog::API>を見てください。
+
+=head2 new
+
+  my $api = Giblog->new(%params);
+
+L<Giblog>オブジェクトを作成します。
+
+B<パラメーター:>
+
+=over 4
+
+=item * home_dir - ホームディレクトリ
+
+=item * config - 設定
+
+=back
+
+=head2 run_command
+
+  $giblog->run_command(@argv);
+
+コマンドシステムを実行します。
+
+=head2 config
+
+  my $config = $giblog->config;
+
+Giblogの設定を取得。
+
+=head2 home_dir
+
+  my $home_dir = $giblog->home_dir;
+
+ホームディレクトリを取得。
+
+=head1 ドキュメント
+
+=over 2
+
+=item * L<Giblog>
+
+=item * L<Giblog::API>
+
+=item * L<Giblog::Command>
+
+=item * L<Giblog::Command::new>
+
+=item * L<Giblog::Command::new_website>
+
+=item * L<Giblog::Command::new_blog>
+
+=item * L<Giblog::Command::add>
+
+=item * L<Giblog::Command::build>
+
+=item * L<Giblog::Command::serve>
+
+=item * L<Giblog::Command::publish>
+
+=back
+
+=head1 FAQ
+
+=head2 GiblogはWindowsをサポートしますか?
+
+GiblogはGitとMojoliciousに依存しているため、GiblogはネイティブWindows（Strawberry Perl、またはActive Perl）をサポートしていません。
+
+WindowsでGiblogを使用したい場合は、WSL2を利用できます。
+
+=head2 GiblogがサポートするPerlの最低のバージョンは何ですか?
+
+GiblogはMojoliciousに依存しているために、Mojoliciousが要求するPerlの最低のバージョンになります。現在はPerl 5.16+です。
+
+=head2 Giblogが必要とするGitの最低バージョンは何ですか?
+
+Git 1.8.5+です。
+
+=head2 Giblog 1からGiblog 2へアップグレードする場合の注意点は何ですか?
+
+Giblog 2.0からは、Perlの最低バージョンは、Mojoliciousに依存するので、できる限り新しいPerlを利用してください。
+
+Git 1.8.5+が必要です。
+
 =head1 Giblog公式サイト
 
 L<Giblog公式サイト|https://jp.giblog.net/>
 
 =head1 著者
 
-Perlゼミ(木本裕紀), C<< <kimoto.yuki at gmail.com> >>
+木本裕紀, C<< <kimoto.yuki at gmail.com> >>
 
 =head1 ライセンスとコピーライト
 
-Copyright 2018-2019 Yuki Kimoto.
+Copyright 2018-2021 Yuki Kimoto.
 
 このプログラムはフリーソフトウェアです。 Artistic License（2.0）の条件の下でそれを再配布および/または修正することができます。あなたは完全なライセンスのコピーを以下から入手することができます。
 
